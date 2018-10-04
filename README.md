@@ -62,6 +62,7 @@ If you use tmux frequently, you can make sshrc work there as well. The following
     alias foo='echo I work with tmux, too'
     
     tmuxrc() {
+        local TMUXCONF=$SSHHOME/.sshrc.d/.tmux.conf
         local TMUXDIR=/tmp/russelltmuxserver
         if ! [ -d $TMUXDIR ]; then
             rm -rf $TMUXDIR
@@ -69,7 +70,7 @@ If you use tmux frequently, you can make sshrc work there as well. The following
         fi
         rm -rf $TMUXDIR/.sshrc.d
         cp -r $SSHHOME/.sshrc $SSHHOME/bashsshrc $SSHHOME/sshrc $SSHHOME/.sshrc.d $TMUXDIR
-        SSHHOME=$TMUXDIR SHELL=$TMUXDIR/bashsshrc /usr/bin/tmux -S $TMUXDIR/tmuxserver $@
+        SSHHOME=$TMUXDIR SHELL=$TMUXDIR/bashsshrc /usr/bin/tmux -f $TMUXCONF -S $TMUXDIR/tmuxserver $@
     }
     export SHELL=`which bash`
     EOF
